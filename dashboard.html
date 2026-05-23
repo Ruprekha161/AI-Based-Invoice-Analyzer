@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Invoice Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand">🚀 FinTech AI Invoice Engine</div>
+        <div class="user-menu">
+            <select id="currency-selector" class="currency-select" onchange="changeCurrency()">
+                <option value="USD">Dollar ($)</option>
+                <option value="INR">Indian Rupee (₹)</option>
+            </select>
+            <span>Welcome, <strong>Alex Doe</strong></span>
+            <a href="login.html" class="btn-logout">Logout</a>
+        </div>
+    </header>
+
+    <main class="dashboard-wrapper">
+        <section class="metrics-row">
+            <div class="card animated slideIn">
+                <h3>Total Expenses</h3>
+                <p id="card-expenses" class="metric-val">$0.00</p>
+            </div>
+            <div class="card animated slideIn">
+                <h3>Total Tax / GST</h3>
+                <p id="card-tax" class="metric-val">$0.00</p>
+            </div>
+            <div class="card animated slideIn">
+                <h3>Total Invoices</h3>
+                <p id="card-count" class="metric-val">0</p>
+            </div>
+            <div class="card animated slideIn">
+                <h3>Top Spend Sector</h3>
+                <p id="card-category" class="metric-val">N/A</p>
+            </div>
+        </section>
+
+        <section class="card alert-box animated fadeIn">
+            <h3>🤖 Real-time AI Financial Insights</h3>
+            <ul id="ai-insights-list">
+                <li>Analyzing parameters data to yield strategic recommendations...</li>
+            </ul>
+        </section>
+
+        <div class="dashboard-grid">
+            <div class="grid-column">
+                <div class="card file-upload-card">
+                    <h3>📥 Process Document Instance</h3>
+                    <form id="upload-form" onsubmit="handleUpload(event)">
+                        <div class="dropzone">
+                            <input type="file" id="invoice-file" accept=".pdf,.png,.jpg,.jpeg" required>
+                            <p>Drag or browse files (PDF, PNG, JPG)</p>
+                        </div>
+                        
+                        <div class="mock-fields-accordion">
+                            <h4>⚙️ OCR Simulation Payload Fields</h4>
+                            <input type="text" id="mock-merchant" placeholder="Raw OCR Merchant (e.g., Walmart Corp)">
+                            <input type="text" id="mock-amount" placeholder="Raw OCR Amount (e.g., 154.20)">
+                            <input type="text" id="mock-date" placeholder="Raw OCR Date (e.g., 2026/05/18)">
+                            <input type="text" id="mock-tax" placeholder="Raw OCR Tax (e.g., 10.50)">
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">Process with Invoice Analyser</button>
+                    </form>
+                    <div id="upload-status"></div>
+                </div>
+
+                <div class="card profile-card">
+                    <h3>👤 Configuration & Profile Management</h3>
+                    <form id="profile-form" onsubmit="handleProfileUpdate(event)">
+                        <div class="input-group">
+                            <label>Name</label>
+                            <input type="text" id="prof-name" value="Alex Doe" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" id="prof-email" value="alex@example.ai" required>
+                        </div>
+                        <div class="input-group">
+                            <label>New Password (Leave empty to keep current)</label>
+                            <input type="password" id="prof-pass">
+                        </div>
+                        <button type="submit" class="btn-secondary">Apply Transformations</button>
+                    </form>
+                    <div id="profile-status"></div>
+                </div>
+            </div>
+
+            <div class="grid-column">
+                <div class="card chart-card">
+                    <h3>📊 Category Allocations Breakdown</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+
+                <div class="card data-table-card">
+                    <h3>📋 Document Logs Pipeline</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Merchant</th>
+                                    <th>Category</th>
+                                    <th>Tax</th>
+                                    <th>Gross Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoice-table-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Trigger dashboard metrics on load
+        document.addEventListener("DOMContentLoaded", loadDashboardData);
+    </script>
+</body>
+</html>
