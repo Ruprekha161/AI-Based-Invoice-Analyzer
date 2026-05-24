@@ -1,2 +1,3 @@
 # AI-Based-Invoice-Analyzer
-AI-powered invoice analyzer for automated expense extraction and financial insights.
+AI-powered invoice analyzer for automated expense extraction and financial insights. 
+InvoiceLens AI is an AI-powered financial tracking system that automates invoice processing, expense analysis, and financial insights using OCR, AI categorization, and predictive analytics. It follows a 3-pillar architecture: Web, App, and AI Implementation. The web layer provides an interactive dashboard with charts and invoice management using HTML, CSS, JavaScript, and Chart.js. The app layer handles file upload, OCR processing, camera capture, and localStorage-based data management. The AI layer uses a hybrid model combining rule-based classification and Claude API for insights, anomaly detection, and forecasting. This project demonstrates full-stack thinking with real-world AI integration.
