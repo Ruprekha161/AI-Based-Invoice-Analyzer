@@ -60,15 +60,15 @@ body{background:var(--bg);font-family:'Syne',sans-serif;color:var(--text);min-he
       <button class="tab" onclick="switchTab('register')">Register</button>
     </div>
     <div id="login-sec" class="form-sec active">
-      <div class="form-title">🔐 Welcome Back</div>
+      <div class="form-title"> Welcome Back</div>
       <div class="field"><label>Email</label><input type="email" id="l-email" placeholder="you@email.com" autocomplete="email"></div>
       <div class="field"><label>Password</label><input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"></div>
       <button class="btn-main" onclick="doLogin()">Sign In →</button>
       <div class="divider">or try instantly</div>
-      <button class="btn-demo" onclick="doDemo()">⚡ Demo Mode — No Account Needed</button>
+      <button class="btn-demo" onclick="doDemo()">Demo Mode — No Account Needed</button>
     </div>
     <div id="register-sec" class="form-sec">
-      <div class="form-title">✨ Create Account</div>
+      <div class="form-title">Create Account</div>
       <div class="field"><label>Full Name</label><input type="text" id="r-name" placeholder="Your Name" autocomplete="name"></div>
       <div class="field"><label>Email</label><input type="email" id="r-email" placeholder="you@email.com" autocomplete="email"></div>
       <div class="field"><label>Password (min 6 chars)</label><input type="password" id="r-pass" placeholder="••••••••" autocomplete="new-password"></div>
@@ -77,7 +77,7 @@ body{background:var(--bg);font-family:'Syne',sans-serif;color:var(--text);min-he
     <div id="msg" class="msg"></div>
   </div>
 </div>
-<div class="status-bar"><div class="dot"></div> NO SERVER NEEDED · RUNS IN BROWSER</div>
+
 <script>
 const USERS_KEY='fl_users';const SESS_KEY='fl_sess';
 function getUsers(){try{return JSON.parse(localStorage.getItem(USERS_KEY)||'[]');}catch{return[];}}
