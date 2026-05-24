@@ -1,49 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Invoice Analyzer - Access</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InvoiceLens AI — Login</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#050810;--accent:#00f5c4;--accent2:#7c6bff;--text:#e8eaf0;--muted:#6b7080;--card:rgba(10,14,28,0.95);--border:rgba(255,255,255,0.08);--danger:#ff4d6d;}
+body{background:var(--bg);font-family:'Syne',sans-serif;color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.orb1{width:500px;height:500px;background:rgba(124,107,255,0.15);top:-150px;left:-150px;}
+.orb2{width:400px;height:400px;background:rgba(0,245,196,0.12);bottom:-100px;right:-100px;}
+.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;}
+.wrap{position:relative;z-index:10;width:100%;max-width:420px;padding:20px;}
+.brand{text-align:center;margin-bottom:28px;animation:fadeUp 0.5s ease both;}
+.brand-tag{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--accent);margin-bottom:8px;}
+.brand-name{font-size:38px;font-weight:800;letter-spacing:-1px;}
+.brand-name span{color:var(--accent);}
+.brand-sub{font-size:12px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:4px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;backdrop-filter:blur(20px);animation:fadeUp 0.5s ease 0.1s both;box-shadow:0 0 80px rgba(0,245,196,0.04);}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:rgba(255,255,255,0.04);border-radius:10px;padding:4px;margin-bottom:24px;}
+.tab{padding:10px;border:none;background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:13px;font-weight:600;border-radius:7px;cursor:pointer;transition:all 0.2s;}
+.tab.active{background:var(--accent);color:#050810;}
+.form-sec{display:none;} .form-sec.active{display:block;}
+.form-title{font-size:18px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:11px;font-family:'Space Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.field input{width:100%;padding:11px 13px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Syne',sans-serif;font-size:14px;outline:none;transition:all 0.2s;}
+.field input:focus{border-color:var(--accent);background:rgba(0,245,196,0.04);box-shadow:0 0 0 3px rgba(0,245,196,0.08);}
+.btn-main{width:100%;padding:13px;background:linear-gradient(135deg,var(--accent),#00c49a);border:none;border-radius:10px;color:#050810;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.3s;margin-top:4px;}
+.btn-main:hover{box-shadow:0 6px 24px rgba(0,245,196,0.3);transform:translateY(-1px);}
+.btn-demo{width:100%;padding:11px;background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-family:'Syne',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;margin-top:8px;}
+.btn-demo:hover{border-color:var(--accent2);color:var(--text);background:rgba(124,107,255,0.08);}
+.divider{display:flex;align-items:center;gap:10px;margin:14px 0;font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.msg{margin-top:12px;padding:10px 13px;border-radius:8px;font-size:13px;display:none;}
+.msg.err{background:rgba(255,77,109,0.1);border:1px solid rgba(255,77,109,0.3);color:var(--danger);}
+.msg.ok{background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.3);color:var(--accent);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.status-bar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+</style>
 </head>
-<body class="auth-body">
-    <div class="auth-container animated fadeIn">
-        <div class="auth-tabs">
-            <button id="tab-login" class="active" onclick="switchTab('login')">Sign In</button>
-            <button id="tab-register" onclick="switchTab('register')">Create Account</button>
-        </div>
-
-        <form id="login-form" class="auth-form" onsubmit="handleAuth(event, '/api/auth/login')">
-            <h2>Welcome Back</h2>
-            <div class="input-group">
-                <label>Email Address</label>
-                <input type="email" id="login-email" required>
-            </div>
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" id="login-password" required>
-            </div>
-            <button type="submit" class="btn-primary">Sign In</button>
-        </form>
-
-        <form id="register-form" class="auth-form hidden" onsubmit="handleAuth(event, '/api/auth/register')">
-            <h2>Register Account</h2>
-            <div class="input-group">
-                <label>Full Name</label>
-                <input type="text" id="reg-name" required>
-            </div>
-            <div class="input-group">
-                <label>Email Address</label>
-                <input type="email" id="reg-email" required>
-            </div>
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" id="reg-password" required>
-            </div>
-            <button type="submit" class="btn-primary">Sign Up</button>
-        </form>
-        <div id="auth-error" class="error-msg"></div>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div class="grid-bg"></div>
+<div class="wrap">
+  <div class="brand">
+    <div class="brand-tag">// AI FINTECH PLATFORM</div>
+    <div class="brand-name">Invoice<span>Lens</span></div>
+    <div class="brand-sub">Smart Expense Intelligence</div>
+  </div>
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('login')">Sign In</button>
+      <button class="tab" onclick="switchTab('register')">Register</button>
     </div>
-    <script src="script.js"></script>
+    <div id="login-sec" class="form-sec active">
+      <div class="form-title">🔐 Welcome Back</div>
+      <div class="field"><label>Email</label><input type="email" id="l-email" placeholder="you@email.com" autocomplete="email"></div>
+      <div class="field"><label>Password</label><input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"></div>
+      <button class="btn-main" onclick="doLogin()">Sign In →</button>
+      <div class="divider">or try instantly</div>
+      <button class="btn-demo" onclick="doDemo()">⚡ Demo Mode — No Account Needed</button>
+    </div>
+    <div id="register-sec" class="form-sec">
+      <div class="form-title">✨ Create Account</div>
+      <div class="field"><label>Full Name</label><input type="text" id="r-name" placeholder="Your Name" autocomplete="name"></div>
+      <div class="field"><label>Email</label><input type="email" id="r-email" placeholder="you@email.com" autocomplete="email"></div>
+      <div class="field"><label>Password (min 6 chars)</label><input type="password" id="r-pass" placeholder="••••••••" autocomplete="new-password"></div>
+      <button class="btn-main" onclick="doRegister()">Create Account →</button>
+    </div>
+    <div id="msg" class="msg"></div>
+  </div>
+</div>
+<div class="status-bar"><div class="dot"></div> NO SERVER NEEDED · RUNS IN BROWSER</div>
+<script>
+const USERS_KEY='fl_users';const SESS_KEY='fl_sess';
+function getUsers(){try{return JSON.parse(localStorage.getItem(USERS_KEY)||'[]');}catch{return[];}}
+function saveUsers(u){localStorage.setItem(USERS_KEY,JSON.stringify(u));}
+function hashPw(p){let h=0;for(let c of p){h=((h<<5)-h)+c.charCodeAt(0);h|=0;}return'h'+Math.abs(h).toString(36);}
+function showMsg(txt,isErr){const el=document.getElementById('msg');el.textContent=txt;el.className='msg '+(isErr?'err':'ok');el.style.display='block';}
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('active',(i===0&&t==='login')||(i===1&&t==='register')));
+  document.getElementById('login-sec').classList.toggle('active',t==='login');
+  document.getElementById('register-sec').classList.toggle('active',t==='register');
+  document.getElementById('msg').style.display='none';
+}
+function goToDash(user){
+  localStorage.setItem(SESS_KEY,JSON.stringify({...user,loginTime:Date.now()}));
+  // Ensure invoices key exists for new users
+  if(!localStorage.getItem('il_invoices')) localStorage.setItem('il_invoices','[]');
+  window.location.href='dashboard.html';
+}
+function doLogin(){
+  const email=document.getElementById('l-email').value.trim().toLowerCase();
+  const pass=document.getElementById('l-pass').value;
+  if(!email||!pass){showMsg('Please fill all fields.',true);return;}
+  const users=getUsers();
+  const user=users.find(u=>u.email===email&&u.password===hashPw(pass));
+  if(!user){showMsg('Wrong email or password.',true);return;}
+  showMsg('✓ Login successful! Redirecting...',false);
+  setTimeout(()=>goToDash(user),600);
+}
+function doRegister(){
+  const name=document.getElementById('r-name').value.trim();
+  const email=document.getElementById('r-email').value.trim().toLowerCase();
+  const pass=document.getElementById('r-pass').value;
+  if(!name||!email||!pass){showMsg('Please fill all fields.',true);return;}
+  if(pass.length<6){showMsg('Password must be at least 6 characters.',true);return;}
+  if(!email.includes('@')){showMsg('Enter a valid email.',true);return;}
+  const users=getUsers();
+  if(users.find(u=>u.email===email)){showMsg('Email already registered.',true);return;}
+  const user={id:Date.now().toString(),name,email,password:hashPw(pass),created:new Date().toISOString()};
+  users.push(user);saveUsers(users);
+  showMsg('✓ Account created! Redirecting...',false);
+  setTimeout(()=>goToDash(user),600);
+}
+function doDemo(){
+  const user={id:'demo',name:'Demo User',email:'demo@invoicelens.ai',demo:true};
+  goToDash(user);
+}
+// Auto redirect if already logged in
+try{const s=JSON.parse(localStorage.getItem(SESS_KEY));if(s&&s.loginTime&&Date.now()-s.loginTime<86400000)window.location.href='dashboard.html';}catch{}
+// Enter key support
+document.addEventListener('keydown',e=>{if(e.key==='Enter'){const active=document.querySelector('.form-sec.active').id;if(active==='login-sec')doLogin();else doRegister();}});
+</script>
 </body>
 </html>
